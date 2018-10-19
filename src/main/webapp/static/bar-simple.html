@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+</head>
+<body style="height: 100%; margin: 0">
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+
+    <div id="outputOncePersion" style="width: 50%;height: 50%;border: 1px solid black"></div>
+    <script type="text/javascript">
+        let div = document.getElementById("outputOncePersion");
+        let myChart = echarts.init(div);
+        let app = {};
+
+        let nowDate = new Date();
+        let nowDateStr = nowDate.getFullYear()+"-"+nowDate.getMonth()+"-"+nowDate.getDay()+" ";
+        let avg = [80,80,80,80,80,80,80,80,80,80];
+        let output = [11.0, 151.0, 121.0, 50.0, 146.0, 121.0, 176.0, 172.0, 171.0, 142.0, 172.0, 22.0, 189.0, 206.0, 156.0, 169.0, 160.0];
+        let xData = ["崔裕胜", "丁玲玲", "方少银", "丰士豪", "胡林", "黄天芬", "姜表七", "决婷婷", "刘博文", "罗艳", "彭锋", "王贵潘", "王艳涛", " 向美羽", "谢实付", "杨平", "赵慧丽"];
+
+        let option = null;
+        option = {
+            title: {
+                text: nowDateStr+'智能工厂产量完成情况',
+                left: 'center',
+                textStyle: {
+                    color: 'black',//文字颜色
+                    fontStyle: 'normal',//字体风格,'normal','italic','oblique'
+                    fontWeight: 'bold',//字体粗细 'normal','bold','bolder','lighter',100 | 200 | 300 | 400...
+                    fontFamily: 'sans-serif', //字体系列
+                    //字体大小
+                    fontSize: 30
+                }
+            },
+            xAxis: {
+                type: 'category',
+                data: xData,
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    type: 'line',
+                    data: avg
+                },
+                {
+                    data: output,
+                    type: 'bar',
+                    label: {
+                        show: true, //开启显示
+                        position: 'top', //在上方显示
+                        textStyle: { //数值样式
+                            color: 'black',
+                            fontSize: 16,
+                            fontWeight: 600
+                        }
+                    },
+                    barCategoryGap: '30%',
+                    itemStyle:{
+                        color: function (param) {
+                            let data = param.data;
+                            if(parseFloat(data) < parseFloat(avg)){
+                                return "red";
+                            }else{
+                                return 'green';
+                            }
+                        }
+                    }
+                }
+            ]
+        };
+
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+
+
+    </script>
+</body>
+</html>
