@@ -6,10 +6,11 @@
 <body style="height: 100%; margin: 0">
     <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
 
-    <div id="outputOncePersion" style="width: 50%;height: 50%;border: 1px solid black"></div>
+    <canvas id="outputOncePersion" width="800px" height="600px"></canvas>
+
     <script type="text/javascript">
-        let div = document.getElementById("outputOncePersion");
-        let myChart = echarts.init(div);
+        let canvas = document.getElementById("outputOncePersion");
+        /*let myChart = echarts.init(canvas);
         let app = {};
 
         let nowDate = new Date();
@@ -73,10 +74,34 @@
 
         if (option && typeof option === "object") {
             myChart.setOption(option, true);
+        }*/
+
+
+        let ctx = canvas.getContext('2d');
+
+
+        function loadImage(url, callback) {
+            //创建一个Image对象，
+            var img = new Image();
+            img.src = url;
+            // 如果图片已经存在于浏览器缓存，直接调用回调函数
+            if (img.complete) {
+                callback.call(img);
+                return;
+            }
+            //图片下载完毕时异步调用callback函数。
+            img.onload = function() {
+                //将回调函数的this替换为Image对象
+                callback.call(img);
+            };
         }
+        loadImage('/image/coolface.png', function() {
+            //this就是图片对象
+            //img,sx,sy,swidth,sheight,x,y,width,height
+            ctx.drawImage(this, 0, 0, this.width, this.height, 0, 0, this.width, this.height);
+            ctx.drawImage(this, 0, 0, this.width/2, this.height/2, this.width, this.height, this.width/2, this.height/2);
+        });
 
-
-        
 
 
     </script>
